@@ -27,6 +27,9 @@ client.on('messageCreate', message => {
         case 'restart' :
             client.commands.get('restart').execute(message)
         break
+        
+        case 'stop' :
+            client.commands.get('stop').execute(message)
     }
 })
 

@@ -5,7 +5,7 @@ module.exports = {
     description : 'Permet de redémarrer le bot',
     async execute(message) {
         try {
-            await message.channel.send('Arrêt du bot')
+            await message.channel.send('Arrêt du bot...')
             process.exit()
         }
         catch(err) {
