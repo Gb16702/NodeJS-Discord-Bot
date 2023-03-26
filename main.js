@@ -1,17 +1,35 @@
 const {Client, Collection} = require('discord.js')
 const loadCommands = require('./Handlers/loadCommands')
+require('./utils/getCurrentFilename')
 require('dotenv').config()
 
-const bot = new Client({intents : 3276799})
+const client = new Client({intents : 3276799})
 
-bot.commands = new Collection()
+client.commands = new Collection()
+console.log(client);
 
-bot.login(process.env.DISCORD_TOKEN)
+client.login(process.env.DISCORD_TOKEN)
 .then(() => {
-    console.log(`${bot.user.tag} est connecté`)
-    loadCommands(bot)
+    console.log(`${client?.user.tag} est connecté`)
+    loadCommands(client)
 }).catch(error => console.warn(`Erreur lors de la connexion : ${error}`))
 
-bot.on('messageCreate', message => {
-    if(message.content === 'ping') bot.commands.get('ping').run(bot, message)
+client.on('messageCreate', message => {
+    switch(message.content) {
+        case 'ping' :
+            client.commands.get('ping').run(client, message)
+        break
+
+        case 'hello' :
+            message.reply(`Bonjour, ${message.author.username}`)
+        break
+
+        case 'restart' :
+            client.commands.get('restart').execute(message)
+        break
+
+        case 'stop' :
+            client.commands.get('stop').execute(message)
+    }
 })
+
